@@ -1,0 +1,57 @@
+Now the App works well with the new data structure, and I'm ready to create a new standalone component: editor. 
+
+Could you write a frame code for this component in JS, CSS, and HTML? I created some requirements for this component; hopefully, they can provide detailed information to help you generate code.  
+
+The following are the requirements of this standalone component (editor):
+
+Database
+
+collections
+	- categories {
+		category: string,
+		cname: string, 
+		sequence: number
+	}
+	
+	- words {chinese: string, 
+		category: string,
+		level: number,
+		index: number, 
+		pinyin: string, 
+		english: string, 
+		phrase: string[], 
+		sentence: string,
+		tokens: string,
+		image: string
+	}
+
+Data
+	- The categories collection currently has 25 documents and will not be expanded a lot (max 30), and it's simple, so I will maintain its data using the Firestore UI. 
+	- The words collection currently has bout 1,500 documents and will not be expanded a lot. This collection needs to be maintained by the new "editor" component. I created this words collection with the HSK's (Hanyu Shuiping Kaoshi) vocabulary table, so most of the words already have some pre-filled values. 
+	
+UI
+
+	- Create a UI to edit the words collection, including Add, Update, and Delete. 
+	- The UI shall look like a spreadsheet, each row for one Word document. 
+	- The UI shall be paginated; the default number of rows per page is 25. 
+	- The column layout of a row shall look like this: 
+		
+		chinese | category | level | index | pinyin | english | phrase | sentence | tokens | image
+	
+	- the specific requirements of each column
+	   chinese: width 8, Chinese character of this document
+	   category: width 14, a dropdown list to select a category from the existing categories, which come from the categories collection.
+	   level: width 6, a dropdown list of numbers from 1 to 7
+	   index: width 6, this is the index of the word in its category [1-50]
+	   pinyin: width 10, use a service call speaker.getPinyin(text: string) to get it if it is empty
+	   english: width 14, user needs to type it in
+	   phrase: width: 15, multiple-valued dropdown list that comes from the existing phrase array. Limit the selection values to 5 if the existing list is too long. If the existing list is empty, the user shall be able to enter multiple values. 
+	   sentence: width: 40
+	   tokens: width 50
+	   image: width 30
+	   
+	- UI filter for querying the words collection by category AND level. It can be located at the top of the first row with 2 columns: category, level. If both columns are not empty, use category AND level to query. 
+	
+	- Add a new word. A button to create an empty row with some default values
+	- Delete words: the user shall be able to select multiple words and use a delete button to delete them. Physically, don't delete it from the database collection; change its category to Unknown. 
+	- Save. When any row is added, deleted or updated, save the change per-row.

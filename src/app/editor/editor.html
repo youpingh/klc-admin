@@ -1,0 +1,83 @@
+<!-- The contents -->
+<div id='contents' class="contents">
+    <!-- Filters, search, add, delete and save all buttons -->
+    <div class="filters">
+        <label class="labels">Category: </label>
+        <select class="form-select" [(ngModel)]="filterCategory" (change)="loadWords()">
+            <option value="">All Categories</option>
+            <option *ngFor="let c of (categories$ | async)" [value]="c.category">
+                {{ c.category }}
+            </option>
+        </select>
+
+        <label class="labels">Level: </label>
+        <select [(ngModel)]="filterLevel" (change)="loadWords()">
+            <option [ngValue]="null">All Levels</option>
+            <option *ngFor="let l of [1,2,3,4,5,6,7]" [ngValue]="l">{{ l }}</option>
+        </select>
+
+        <label class="labels">Search: </label>
+        <input class="c-pinyin" [(ngModel)]="wordString" (blur)="searchWord()" />
+        <span [style.display]="wordString.length > 0 ? 'block' : 'none'" class="search-symbol"
+            (click)="searchWord()">🔍</span>
+
+        <button (click)="addWord()">➕ Add</button>
+        <button (click)="deleteSelected()">🗑 Delete</button>
+        <button [disabled]="!hasDirtyWords()" title="Save all modified words" (click)="saveChangedWords()"><img
+                src="assets/images/site/save-all.png" height="20px"> Save All</button>
+    </div>
+
+    <!-- Header -->
+    <div class="row header english-font">
+        <input type="checkbox" (change)="toggleAll($event.target.checked)" />
+        <div class="c-chinese" title="Chinese character">Char</div>
+        <div class="c-category" title="Character category">Category</div>
+        <div class="c-level" title="Language level">Level</div>
+        <div class="c-index" title="Display index in the category">Index</div>
+        <div class="c-pinyin" title="Pinyin of the character">Pinyin</div>
+        <div class="c-english" title="English translation">English</div>
+        <div class="c-phrase" title="Phrases that use this character">Phrases</div>
+        <div class="c-sentence" title="Sentence that uses this character">Sentence</div>
+        <div class="c-image" title="URL of the image">Image</div>
+        <div class="c-save" title="Save the changes">Save</div>
+    </div>
+
+    <!-- Rows -->
+    <div class="row" *ngFor="let w of pagedWords">
+        <input type="checkbox" [(ngModel)]="w.selected" />
+        <input class="c-chinese chinese-font" [(ngModel)]="w.chinese" [readonly]="!w.isNew"
+            (ngModelChange)="keyChanged(w)" />
+        <select class="c-category english-font" [(ngModel)]="w.category" (ngModelChange)="markDirty(w)">
+            <option *ngFor="let c of (categories$ | async)" [value]="c.category">
+                {{ c.category }}
+            </option>
+        </select>
+        <select class="c-level" [(ngModel)]="w.level" (change)="markDirty(w)">
+            <option *ngFor="let l of [1,2,3,4,5,6,7]" [value]="l">{{ l }}</option>
+        </select>
+        <input class="c-index" type="number" [(ngModel)]="w.index" (ngModelChange)="markDirty(w)" />
+        <input class="c-pinyin english-font" [(ngModel)]="w.pinyin" (focus)="fillPinyin(w)"
+            (ngModelChange)="markDirty(w)" />
+        <input class="c-english english-font" [(ngModel)]="w.english" (ngModelChange)="markDirty(w)" />
+        <textarea class="c-phrase chinese-font c-phrase-cell" rows="1" [value]="w.phrase.join(', ')"
+            (input)="w.phrase = $any($event.target).value.split(','); markDirty(w)"></textarea>
+        <!-- (input)="w.phrase = $any($event.target).value.split(',').slice(0,5); markDirty(w)" ></textarea> -->
+        <input class="c-sentence chinese-font" [(ngModel)]="w.sentence" (ngModelChange)="markDirty(w)" />
+        <input class="c-image english-font" [(ngModel)]="w.image" (ngModelChange)="markDirty(w)" />
+        <button class="c-save" [disabled]="!w.dirty" (click)="saveWord(w)">💾</button>
+    </div>
+
+    <!-- Message -->
+    <div class="row msg">
+        <p>{{pageMessage}}</p>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <button (click)="prevPage()">◀</button>
+        <span>Page {{ currentPage + 1 }}</span>
+        <button (click)="nextPage()">▶</button>
+        <span> total of {{words.length}} characters at level {{filterLevel}} in {{getFilterCategory()}}.</span>
+    </div>
+
+</div>

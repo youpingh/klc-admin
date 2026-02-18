@@ -1,0 +1,18 @@
+.buttons {
+  margin-bottom: 12px;
+}
+
+button {
+  margin-right: 8px;
+  padding: 6px 12px;
+}
+
+.log {
+  font-family: monospace;
+  font-size: 12px;
+  background: #f8f8f8;
+  border: 1px solid #ccc;
+  padding: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+}

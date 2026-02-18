@@ -1,0 +1,26 @@
+<main>
+  <!-- The fixed header for all the pages -->
+  <header>
+    <img class="binner" src="assets/images/site/banner.jpg" />
+    <p class="menu">
+      <a routerLink="/home">🏠 Home</a>
+      @if (!(isAdmin$ | async)) {
+      <span class="fa-solid fa-user-plus icon"></span>
+      <span class="link" (click)="loginGoogle()">Login</span>
+      }
+      @else {
+      <span [title]='getUserEmail()' class="fa-solid fa-user-plus icon"></span>
+      <span class="link" (click)="signOut()">Sign out</span>
+      }
+    </p>
+  </header>
+
+  @if (isAdmin$ | async) {
+  <router-outlet></router-outlet>
+  } @else {
+  <div class="center">
+    <h2>Access Denied</h2>
+    <p>Please login as admin to use this application.</p>
+  </div>
+  }
+</main>

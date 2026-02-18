@@ -1,0 +1,21 @@
+runtime: python313
+service: default
+
+handlers:
+# Serve wasm with correct MIME type (walk around jieba's loading bug to load from the root)
+- url: /jieba_rs_wasm_bg\.wasm
+  static_files: dist/klc-admin/browser/assets/jieba/jieba_rs_wasm_bg.wasm
+  upload: dist/klc-admin/browser/assets/jieba/jieba_rs_wasm_bg.wasm
+  mime_type: application/wasm
+
+- url: /(.*\.(html|gif|png|jpg|less|json|css|js|ico|svg|webp|wasm)(|\.map))$
+  static_files: dist/klc-admin/browser/\1
+  upload: dist/klc-admin/browser/(.*)(|\.map)
+
+- url: /(.*)
+  static_files: dist/klc-admin/browser/index.html
+  upload: dist/klc-admin/browser/index.html
+
+automatic_scaling:
+  min_instances: 1 # Optional: minimum number of instances to keep running
+  max_instances: 5 # Set your desired maximum number of instances

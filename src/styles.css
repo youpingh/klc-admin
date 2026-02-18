@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+/** 
+ * The commonly used style rules, mostly for the header
+ * and items of the header like search box and menu bar.
+ */
+body {
+	width: 960px;
+	margin: 0 auto;
+	min-height: 700px;
+}
+
+.no-show {
+	display: none;
+}
+
+/* @media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) { */
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+	body {
+		width: 100%;
+	}
+}

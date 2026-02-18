@@ -1,0 +1,23 @@
+<h2>Database Loader</h2>
+
+<div class="buttons">
+    <!-- <button (click)="runAll()" [disabled]="running">
+        Load ALL Data
+    </button> -->
+
+    <button (click)="uploadWords()" [disabled]="running">
+        Load Words
+    </button>
+
+    <button (click)="uploadImages()" [disabled]="running">
+        Load Category Images
+    </button>
+
+    <button (click)="uploadCategories()" [disabled]="running">
+        Load Categories
+    </button>
+</div>
+
+<div class="log">
+    <div *ngFor="let line of logs">{{ line }}</div>
+</div>

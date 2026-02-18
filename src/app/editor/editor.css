@@ -1,0 +1,108 @@
+.editor {
+  font-family: system-ui, sans-serif;
+  font-size: 13px;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.row {
+  display: flex;
+  /* align-items: center; */
+  border-bottom: 1px solid #ddd;
+}
+
+.header {
+  font-weight: 480;
+  font-size: 12px;
+  color: brown;
+  background: #f3f3f3;
+}
+
+.row div,
+.row input,
+.row select {
+  margin: 2px;
+  padding: 1px 2px;
+  font-size: 12px;
+  flex: 0 0 auto;
+}
+
+.c-chinese {
+  width: 5ch;
+}
+
+.c-category {
+  width: 13ch;
+}
+
+.c-level {
+  width: 6ch;
+}
+
+.c-index {
+  width: 6ch;
+}
+
+.c-pinyin {
+  width: 8ch;
+}
+
+.c-english {
+  width: 26ch;
+}
+
+.c-phrase {
+  width: 26ch;
+}
+
+.c-phrase-cell {
+  height: 24px;
+  margin-top: 2px;
+}
+
+.c-sentence {
+  width: 36ch;
+}
+
+.c-image {
+  width: 22ch;
+}
+
+.c-save {
+  width: 5ch;
+  font-size: 12px;
+}
+
+.chinese-font {
+  font-family: SimSun;
+  font-size: 12px;
+}
+
+.english-font {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 12px;
+}
+
+.msg {
+  color: brown;
+}
+
+.labels {
+  margin-top: 4px;
+}
+
+.search-symbol {
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.pagination {
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
