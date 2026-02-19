@@ -32,9 +32,9 @@ libpeerconnection.log
 testem.log
 typings
 
-src/custom-claims/serviceAccountKey.json
-src/custom-claims/package-lock.json
-src/custom-claims/node_modules
+src/admin-tools/serviceAccountKey.json
+src/admin-tools/package-lock.json
+src/admin-tools/node_modules
 
 # System files
 .DS_Store

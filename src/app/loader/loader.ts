@@ -29,6 +29,10 @@ export class LoaderComponent {
     await this.runTask('Categories', () => this.loader.uploadCategories());
   }
 
+  async uploadUsers() {
+    await this.runTask('Users', () => this.loader.uploadUsers());
+  }
+
   private async runTask(name: string, task: () => Promise<number>) {
     if (this.running) return;
 

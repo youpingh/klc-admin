@@ -24,8 +24,10 @@ import { Category, Word } from '../model/AppModules';
 export class DataService {
 
 	// assets location
+	private readonly USERS_FILE = 'assets/data/users.json';
 	private readonly CATEGORIES_FILE = 'assets/data/categories.json';
 	private readonly IMAGES_FILE = 'assets/data/category-images.json';
+	private readonly WORDS_FILE = 'assets/data/words.json';
 	private readonly CURRENT_WORDS_FILE = 'assets/data/current-characters.json';
 	private readonly HSK_WORDS_FILE = 'assets/data/hsk-characters.json';
 
@@ -106,10 +108,11 @@ export class DataService {
 		await this.uploadAllWords();
 		await this.uploadCategoryImages();
 		await this.uploadCategories();
+		await this.uploadUsers();
 	}
 
 	async uploadCategories(): Promise<number> {
-		console.log('Starting upload categories ...');
+		console.log('Start uploading categories ...');
 		const categories = await this.loadJSON(this.CATEGORIES_FILE);
 
 		for (const category of categories) {
@@ -121,8 +124,21 @@ export class DataService {
 		return categories.length;
 	}
 
+	async uploadUsers(): Promise<number> {
+		console.log('Start uploading users ...');
+		const users = await this.loadJSON(this.USERS_FILE);
+
+		for (const user of users) {
+			const ref = doc(this.firestore, environment.users, user.email);
+			await setDoc(ref, user);
+		}
+
+		console.log('Categories imported:', users.length);
+		return users.length;
+	}
+
 	async uploadCategoryImages(): Promise<number> {
-		console.log('Starting upload images ...');
+		console.log('Start uploading images ...');
 		const images = await this.loadJSON(this.IMAGES_FILE);
 
 		for (const image of images) {
@@ -135,7 +151,15 @@ export class DataService {
 	}
 
 	async uploadAllWords(): Promise<number> {
-		console.log('Starting upload words ...');
+		console.log('Start uploading words ...');
+		const words = await this.loadJSON(this.WORDS_FILE);
+		await this.batchUploadWords(environment.words, words);
+		console.log('Words imported:', words.length);
+		return words.length;
+	}
+
+	async mergeWords(): Promise<number> {
+		console.log('Start merging words ...');
 		const words = await this.convertWords();
 		await this.batchUploadWords(environment.words, words);
 		console.log('Words imported:', words.length);

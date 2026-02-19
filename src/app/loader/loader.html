@@ -1,21 +1,29 @@
 <h2>Database Loader</h2>
 
 <div class="buttons">
-    <!-- <button (click)="runAll()" [disabled]="running">
+    <!-- <button class="btn" (click)="runAll()" [disabled]="running">
         Load ALL Data
     </button> -->
 
-    <button (click)="uploadWords()" [disabled]="running">
+    <button class="btn btn-primary mr-3" (click)="uploadWords()" [disabled]="running">
         Load Words
     </button>
 
-    <button (click)="uploadImages()" [disabled]="running">
+    <button class="btn btn-primary mr-3" (click)="uploadImages()" [disabled]="running">
         Load Category Images
     </button>
 
-    <button (click)="uploadCategories()" [disabled]="running">
+    <button class="btn btn-primary mr-3" (click)="uploadCategories()" [disabled]="running">
         Load Categories
     </button>
+
+    <button class="btn btn-primary" (click)="uploadUsers()" [disabled]="running">
+        Load Users
+    </button>
+    
+    <p class="msg">
+        Make sure the JSON files in assets/data folder are ready to upload before running the loader.
+    </p>
 </div>
 
 <div class="log">

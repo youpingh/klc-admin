@@ -25,6 +25,7 @@ export const environment = {
   greetingImages: 'greeting-images',
   categories: 'categories',
   words: 'words',
+  users: 'users',
 
   wordImgDir: 'assets/images/chars/',
   greetingImgDir: 'assets/images/greetings/',

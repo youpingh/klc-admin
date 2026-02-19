@@ -100,6 +100,7 @@ export class EditorComponent implements OnInit {
         // this.words.unshift(word);
         this.words = [];
         this.words.push(word);
+        this.currentPage = 0;
         console.log(`Got a word from the collection ${word.chinese}`);
       } else {
         this.pageMessage = `No this word: ${this.wordString}`;

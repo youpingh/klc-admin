@@ -2,9 +2,14 @@
   margin-bottom: 12px;
 }
 
-button {
-  margin-right: 8px;
-  padding: 6px 12px;
+.sp {
+  margin-right: 4ch;
+}
+
+.msg {
+  color:brown;
+  margin-top: 2ch;
+  font-family: 'Times New Roman', Times, serif
 }
 
 .log {

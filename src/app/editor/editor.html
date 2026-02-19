@@ -53,7 +53,7 @@
             </option>
         </select>
         <select class="c-level" [(ngModel)]="w.level" (change)="markDirty(w)">
-            <option *ngFor="let l of [1,2,3,4,5,6,7]" [value]="l">{{ l }}</option>
+            <option *ngFor="let l of [1,2,3,4,5,6,7]" [ngValue]="l">{{ l }}</option>
         </select>
         <input class="c-index" type="number" [(ngModel)]="w.index" (ngModelChange)="markDirty(w)" />
         <input class="c-pinyin english-font" [(ngModel)]="w.pinyin" (focus)="fillPinyin(w)"
