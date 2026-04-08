@@ -22,7 +22,7 @@ export class LoaderComponent {
   }
 
   async uploadImages() {
-    await this.runTask('Category Images', () => this.loader.uploadCategoryImages());
+    await this.runTask('Greeting Images', () => this.loader.uploadGreetingImages());
   }
 
   async uploadCategories() {

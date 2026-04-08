@@ -32,9 +32,6 @@ libpeerconnection.log
 testem.log
 typings
 
-src/admin-tools/serviceAccountKey.json
-src/admin-tools/package-lock.json
-src/admin-tools/node_modules
 
 # System files
 .DS_Store

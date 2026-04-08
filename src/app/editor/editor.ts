@@ -72,6 +72,20 @@ export class EditorComponent implements OnInit {
     return (this.filterCategory.length == 0 ? 'all categories' : 'the category of ' + this.filterCategory);
   }
 
+  onPhraseChange(value: string, w: any) {
+    w.phrase = value
+      .split(',')
+      .map(p => p.trim());
+
+    this.markDirty(w);
+  }
+  
+  autoResize(textarea: HTMLTextAreaElement) {
+    console.log('textarea:', textarea);
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+  }
+
   /**
    * Loads words from the database by category and level.
    */

@@ -26,7 +26,7 @@ export class DataService {
 	// assets location
 	private readonly USERS_FILE = 'assets/data/users.json';
 	private readonly CATEGORIES_FILE = 'assets/data/categories.json';
-	private readonly IMAGES_FILE = 'assets/data/category-images.json';
+	private readonly IMAGES_FILE = 'assets/data/greeting-images.json';
 	private readonly WORDS_FILE = 'assets/data/words.json';
 	private readonly CURRENT_WORDS_FILE = 'assets/data/current-characters.json';
 	private readonly HSK_WORDS_FILE = 'assets/data/hsk-characters.json';
@@ -106,7 +106,7 @@ export class DataService {
 	//
 	async uploadAll(): Promise<void> {
 		await this.uploadAllWords();
-		await this.uploadCategoryImages();
+		await this.uploadGreetingImages();
 		await this.uploadCategories();
 		await this.uploadUsers();
 	}
@@ -137,7 +137,7 @@ export class DataService {
 		return users.length;
 	}
 
-	async uploadCategoryImages(): Promise<number> {
+	async uploadGreetingImages(): Promise<number> {
 		console.log('Start uploading images ...');
 		const images = await this.loadJSON(this.IMAGES_FILE);
 
@@ -305,6 +305,13 @@ export class DataService {
 			if (!item.chinese) continue;
 
 			const ref = doc(this.firestore, collection, item.chinese);
+			// use the first word of the English array
+			// if (item.english && item.english.length > 0) {
+			// 	const firstWord = item.english[0];
+			// 	item.english = firstWord;
+			// } else {
+			// 	item.english = '';
+			// }
 			batch.set(ref, item);
 			count++;
 

@@ -24,6 +24,24 @@ export interface Word {
     isNew: boolean;
 }
 
+/** The greeting image */
+export interface GreetingImage {
+    category: string;
+    wrong: string;
+    ok: string;
+    icon: string;
+    great: string[];
+}
+
+/** The app user */
+export interface AppUser {
+    email: string;
+    allowed: boolean;
+    level: number;
+    role: string;
+    name: string;
+}
+
 /** The pinyin retrieved from Google's translation service */
 export interface Pinyin {
     status: boolean;

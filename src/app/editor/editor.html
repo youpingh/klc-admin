@@ -59,8 +59,14 @@
         <input class="c-pinyin english-font" [(ngModel)]="w.pinyin" (focus)="fillPinyin(w)"
             (ngModelChange)="markDirty(w)" />
         <input class="c-english english-font" [(ngModel)]="w.english" (ngModelChange)="markDirty(w)" />
-        <textarea class="c-phrase chinese-font c-phrase-cell" rows="1" [value]="w.phrase.join(', ')"
-            (input)="w.phrase = $any($event.target).value.split(','); markDirty(w)"></textarea>
+        <textarea #ta class="c-phrase chinese-font c-phrase-cell" rows="1" [ngModel]="w.phrase.join(', ')"
+            (ngModelChange)="onPhraseChange($event, w)" (input)="autoResize(ta)">
+        </textarea>
+        <!-- <textarea class="c-phrase chinese-font c-phrase-cell" rows="1" [ngModel]="w.phrase.join(', ')"
+            (ngModelChange)="onPhraseChange($event, w)">
+        </textarea> -->
+        <!-- <textarea class="c-phrase chinese-font c-phrase-cell" rows="1" [value]="w.phrase.join(', ')"
+            (input)="w.phrase = $any($event.target).value.split(','); markDirty(w)"></textarea> -->
         <!-- (input)="w.phrase = $any($event.target).value.split(',').slice(0,5); markDirty(w)" ></textarea> -->
         <input class="c-sentence chinese-font" [(ngModel)]="w.sentence" (ngModelChange)="markDirty(w)" />
         <input class="c-image english-font" [(ngModel)]="w.image" (ngModelChange)="markDirty(w)" />

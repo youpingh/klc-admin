@@ -52,20 +52,24 @@
 }
 
 .c-english {
-  width: 26ch;
+  width: 14ch;
 }
 
 .c-phrase {
-  width: 26ch;
+  width: 28ch;
 }
 
 .c-phrase-cell {
-  height: 24px;
+  min-height: 24px;
   margin-top: 2px;
+  height: auto;
+  white-space: pre-wrap;
+  overflow-y: hidden;
+  resize: none;
 }
 
 .c-sentence {
-  width: 36ch;
+  width: 40ch;
 }
 
 .c-image {
