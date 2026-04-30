@@ -28,6 +28,7 @@ export class DataService {
 	private readonly CATEGORIES_FILE = 'assets/data/categories.json';
 	private readonly IMAGES_FILE = 'assets/data/greeting-images.json';
 	private readonly WORDS_FILE = 'assets/data/words.json';
+	private readonly PHRASES_FILE = 'assets/data/phrases.json';
 	private readonly CURRENT_WORDS_FILE = 'assets/data/current-characters.json';
 	private readonly HSK_WORDS_FILE = 'assets/data/hsk-characters.json';
 
@@ -109,6 +110,7 @@ export class DataService {
 		await this.uploadGreetingImages();
 		await this.uploadCategories();
 		await this.uploadUsers();
+		await this.uploadPhrases();
 	}
 
 	async uploadCategories(): Promise<number> {
@@ -158,6 +160,19 @@ export class DataService {
 		return words.length;
 	}
 
+	async uploadPhrases(): Promise<number> {
+		console.log('Start uploading phrases ...');
+		const phrases = await this.loadJSON(this.PHRASES_FILE);
+		await this.batchUploadPhrases(environment.phrases, phrases);
+		console.log('Phrases imported:', phrases.length);
+		return phrases.length;
+	}
+
+	/**
+	 * Merges the HSK words into words.
+	 * @deprecated
+	 * @returns 
+	 */
 	async mergeWords(): Promise<number> {
 		console.log('Start merging words ...');
 		const words = await this.convertWords();
@@ -168,6 +183,7 @@ export class DataService {
 
 	/**
 	 * Converts the HSK words into words and merges the current words.
+	 * @deprecated
 	 * @returns 
 	 */
 	async convertWords() {
@@ -298,32 +314,72 @@ export class DataService {
 	}
 
 	private async batchUploadWords(collection: string, data: any[]): Promise<void> {
-		let batch = writeBatch(this.firestore);
-		let count = 0;
+		try {
+			let batch = writeBatch(this.firestore);
+			let batchSize = 0;
+			let count = 0;
 
-		for (const item of data) {
-			if (!item.chinese) continue;
+			for (const item of data) {
+				if (!item.chinese) continue;
 
-			const ref = doc(this.firestore, collection, item.chinese);
-			// use the first word of the English array
-			// if (item.english && item.english.length > 0) {
-			// 	const firstWord = item.english[0];
-			// 	item.english = firstWord;
-			// } else {
-			// 	item.english = '';
-			// }
-			batch.set(ref, item);
-			count++;
+				const ref = doc(this.firestore, collection, item.chinese);
+				batch.set(ref, item);
+				batchSize++;
+				count++;
 
-			if (count === 500) {
+				if (batchSize === 500) {
+					await batch.commit();
+					await this.sleep(200); // 200ms (tune if needed)
+					batch = writeBatch(this.firestore);
+					batchSize = 0;
+					console.log(`Loaded ${count} words ...`);
+				}
+			}
+
+			if (batchSize > 0) {
 				await batch.commit();
-				batch = writeBatch(this.firestore);
-				count = 0;
 			}
 		}
-
-		if (count > 0) {
-			await batch.commit();
+		catch (error) {
+			console.error('Batch loading words failed', error);
+			return;
 		}
+	}
+
+	private async batchUploadPhrases(collection: string, data: any[]): Promise<void> {
+		try {
+			let batch = writeBatch(this.firestore);
+			let batchSize = 0;
+			let count = 0;
+
+			for (const item of data) {
+				if (!item.phrase) continue;
+
+				const ref = doc(this.firestore, collection, item.phrase);
+				batch.set(ref, item);
+				batchSize++;
+				count++;
+
+				if (batchSize === 500) {
+					await batch.commit();
+					await this.sleep(500); // 200ms (tune if needed)
+					batch = writeBatch(this.firestore);
+					batchSize = 0;
+					console.log(`Loaded ${count} Phrases ...`);
+				}
+			}
+
+			if (batchSize > 0) {
+				await batch.commit();
+			}
+		}
+		catch (error) {
+			console.error('Batch loading phrases failed', error);
+			return;
+		}
+	}
+
+	private sleep(ms: number): Promise<void> {
+		return new Promise(resolve => setTimeout(resolve, ms));
 	}
 }
