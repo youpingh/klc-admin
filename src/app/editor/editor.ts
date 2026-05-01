@@ -43,6 +43,7 @@ export class EditorComponent implements OnInit {
     pinyin: '',
     english: '',
     phrase: [],
+    definition: [],
     sentence: 'To Be Added',
     image: '',
     selected: false,
@@ -79,7 +80,15 @@ export class EditorComponent implements OnInit {
 
     this.markDirty(w);
   }
-  
+
+  onDefinitionChange(value: string, w: any) {
+    w.definition = value
+      .split(',')
+      .map(p => p.trim());
+
+    this.markDirty(w);
+  }
+
   autoResize(textarea: HTMLTextAreaElement) {
     console.log('textarea:', textarea);
     textarea.style.height = 'auto';

@@ -15,6 +15,7 @@ export interface Word {
     chinese: string;
     english: string;
     pinyin: string;
+    definition: string[];
     phrase: string[];
     sentence: string;
     image: string;

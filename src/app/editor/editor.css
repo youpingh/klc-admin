@@ -33,6 +33,8 @@
 
 .c-chinese {
   width: 5ch;
+  font-weight: bold;
+  color: darkgreen;
 }
 
 .c-category {
@@ -52,11 +54,15 @@
 }
 
 .c-english {
-  width: 14ch;
+  width: 16ch;
 }
 
 .c-phrase {
-  width: 28ch;
+  width: 24ch;
+}
+
+.c-definition {
+  width: 40ch;
 }
 
 .c-phrase-cell {
@@ -68,8 +74,17 @@
   resize: none;
 }
 
+.c-definition-cell {
+  min-height: 24px;
+  margin-top: 2px;
+  height: auto;
+  white-space: pre-wrap;
+  overflow-y: hidden;
+  resize: none;
+}
+
 .c-sentence {
-  width: 40ch;
+  width: 28ch;
 }
 
 .c-image {
@@ -77,8 +92,8 @@
 }
 
 .c-save {
-  width: 5ch;
-  font-size: 12px;
+  width: 6ch;
+  font-size: 10px;
 }
 
 .chinese-font {
